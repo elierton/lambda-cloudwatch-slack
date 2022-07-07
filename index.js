@@ -9,8 +9,6 @@ const { handleElasticache } = require("./src/handlers/handleElasticache.js");
 const { handleCloudWatch } = require("./src/handlers/handleCloudWatch.js");
 const { handleAutoScaling } = require("./src/handlers/handleAutoScaling.js");
 const { handleCatchAll } = require("./src/handlers/handleCatchAll.js");
-const baseSlackMessage = {};
-exports.baseSlackMessage = baseSlackMessage;
 
 var hookUrl;
 

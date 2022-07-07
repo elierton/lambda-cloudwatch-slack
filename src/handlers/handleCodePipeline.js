@@ -1,18 +1,13 @@
-const _ = require('lodash');
-const { baseSlackMessage } = require("../../index");
+const _ = require("lodash");
+const { baseSlackMessage } = require("../../config.js");
 
-function handleCodePipeline(event, context) {
-  var subject = "AWS CodePipeline Notification";
-  var timestamp = (new Date(event.Records[0].Sns.Timestamp)).getTime() / 1000;
-  var snsSubject = event.Records[0].Sns.Subject;
-  var message;
-  var fields = [];
-  var color = "warning";
-  var changeType = "";
+handleCodePipeline = (event, context) => {
+  let { message, changeType, color, fields, subject, timestamp } =
+    CodePipeline();
 
   try {
     message = JSON.parse(event.Records[0].Sns.Message);
-    detailType = message['detail-type'];
+    detailType = message["detail-type"];
 
     if (detailType === "CodePipeline Pipeline Execution State Change") {
       changeType = "";
@@ -28,35 +23,52 @@ function handleCodePipeline(event, context) {
       color = "danger";
     }
     header = message.detail.state + ": CodePipeline " + changeType;
-    fields.push({ "title": "Message", "value": header, "short": false });
-    fields.push({ "title": "Pipeline", "value": message.detail.pipeline, "short": true });
-    fields.push({ "title": "Region", "value": message.region, "short": true });
+    fields.push({ title: "Message", value: header, short: false });
     fields.push({
-      "title": "Status Link",
-      "value": "https://console.aws.amazon.com/codepipeline/home?region=" + message.region + "#/view/" + message.detail.pipeline,
-      "short": false
+      title: "Pipeline",
+      value: message.detail.pipeline,
+      short: true,
     });
-  }
-  catch (e) {
+    fields.push({ title: "Region", value: message.region, short: true });
+    fields.push({
+      title: "Status Link",
+      value:
+        "https://console.aws.amazon.com/codepipeline/home?region=" +
+        message.region +
+        "#/view/" +
+        message.detail.pipeline,
+      short: false,
+    });
+  } catch (e) {
     color = "good";
     message = event.Records[0].Sns.Message;
     header = message.detail.state + ": CodePipeline " + message.detail.pipeline;
-    fields.push({ "title": "Message", "value": header, "short": false });
-    fields.push({ "title": "Detail", "value": message, "short": false });
+    fields.push({ title: "Message", value: header, short: false });
+    fields.push({ title: "Detail", value: message, short: false });
   }
-
 
   var slackMessage = {
     text: "*" + subject + "*",
     attachments: [
       {
-        "color": color,
-        "fields": fields,
-        "ts": timestamp
-      }
-    ]
+        color: color,
+        fields: fields,
+        ts: timestamp,
+      },
+    ],
   };
 
   return _.merge(slackMessage, baseSlackMessage);
-}
+
+  function CodePipeline() {
+    let subject = "AWS CodePipeline Notification";
+    let timestamp = new Date(event.Records[0].Sns.Timestamp).getTime() / 1000;
+    let snsSubject = event.Records[0].Sns.Subject;
+    let message;
+    let fields = [];
+    let color = "warning";
+    let changeType = "";
+    return { message, changeType, color, fields, subject, timestamp };
+  }
+};
 exports.handleCodePipeline = handleCodePipeline;
