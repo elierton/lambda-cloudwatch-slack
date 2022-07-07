@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const { baseSlackMessage } = require("./index");
+const { baseSlackMessage } = require("../../index");
 
 function handleCatchAll(event, context) {
 
@@ -9,11 +9,7 @@ function handleCatchAll(event, context) {
   var message = JSON.parse(record.Sns.Message);
   var color = "warning";
 
-  if (message.NewStateValue === "ALARM") {
-    color = "danger";
-  } else if (message.NewStateValue === "OK") {
-    color = "good";
-  }
+  message.NewStateValue === "ALARM" ? color = "danger" : message.NewStateValue === "OK" ? color = "good" : null;
 
   // Add all of the values from the event message to the Slack message description
   var description = "";

@@ -1,13 +1,13 @@
 const _ = require('lodash');
-const { baseSlackMessage } = require("./index");
+const { baseSlackMessage } = require("../../index");
 
 function handleCodeDeploy(event, context) {
-  var subject = "AWS CodeDeploy Notification";
-  var timestamp = (new Date(event.Records[0].Sns.Timestamp)).getTime() / 1000;
-  var snsSubject = event.Records[0].Sns.Subject;
-  var message;
-  var fields = [];
-  var color = "warning";
+  let subject = "AWS CodeDeploy Notification";
+  let timestamp = (new Date(event.Records[0].Sns.Timestamp)).getTime() / 1000;
+  let snsSubject = event.Records[0].Sns.Subject;
+  let message;
+  let fields = [];
+  let color = "warning";
 
   try {
     message = JSON.parse(event.Records[0].Sns.Message);

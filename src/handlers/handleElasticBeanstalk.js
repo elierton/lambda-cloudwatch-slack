@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const { baseSlackMessage } = require("./index");
+const { baseSlackMessage } = require("../../index");
 
 function handleElasticBeanstalk(event, context) {
   var timestamp = (new Date(event.Records[0].Sns.Timestamp)).getTime() / 1000;

@@ -1,11 +1,9 @@
 {
   "name": "lambda-cloudwatch-slack",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "description": "Slack notifications for AWS CloudWatch",
   "authors": [
-    "Christopher Reichert <creichert07@gmail.com>",
-    "Cody Reichert <codyreichert@gmail.com>",
-    "Alexandr Promakh <s-promakh@ya.ru>"
+    "Elierton Emerenciano <elilacost@gmail.com>"   
   ],
   "config": {
     "progress": "true"
@@ -19,20 +17,13 @@
   "devDependencies": {
     "node-lambda": "^1.0.0"
   },
-  "keywords": [
-    "aws",
-    "slack",
-    "lambda",
-    "slackbot",
-    "cloudwatch",
-    "notifications"
-  ],
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/assertible/lambda-cloudwatch-slack.git"
+    "url": "https://github.com/elierton/lambda-cloudwatch-slack.git"
   },
   "scripts": {
+    "build": "node-lambda package -n lambda_cloudwatch_slack -A ./build",
     "deploy": "./scripts/deploy.sh",
     "test": "./scripts/test.sh"
   }

@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const { baseSlackMessage } = require("./index");
+const { baseSlackMessage } = require("../../index");
 
 function handleElasticache(event, context) {
   var subject = "AWS ElastiCache Notification";

@@ -1,18 +1,19 @@
 const _ = require('lodash');
-const { baseSlackMessage } = require("./index");
+const { baseSlackMessage } = require("../../index");
 
 function handleAutoScaling(event, context) {
-  var subject = "AWS AutoScaling Notification";
-  var message = JSON.parse(event.Records[0].Sns.Message);
-  var timestamp = (new Date(event.Records[0].Sns.Timestamp)).getTime() / 1000;
-  var eventname, nodename;
-  var color = "good";
+  let subject = "AWS AutoScaling Notification";
+  let message = JSON.parse(event.Records[0].Sns.Message);
+  let timestamp = (new Date(event.Records[0].Sns.Timestamp)).getTime() / 1000;
+  let eventname, nodename;
+  let color = "good";
 
   for (key in message) {
     eventname = key;
     nodename = message[key];
     break;
   }
+
   var slackMessage = {
     text: "*" + subject + "*",
     attachments: [

@@ -1,26 +1,22 @@
 const _ = require('lodash');
-const { baseSlackMessage } = require("./index");
+const { baseSlackMessage } = require("../../index");
 
 function handleCloudWatch(event, context) {
-  var timestamp = (new Date(event.Records[0].Sns.Timestamp)).getTime() / 1000;
-  var message = JSON.parse(event.Records[0].Sns.Message);
-  var region = event.Records[0].EventSubscriptionArn.split(":")[3];
-  var subject = "AWS CloudWatch Notification";
-  var alarmName = message.AlarmName;
-  var metricName = message.Trigger.MetricName;
-  var oldState = message.OldStateValue;
-  var newState = message.NewStateValue;
-  var alarmDescription = message.AlarmDescription;
-  var alarmReason = message.NewStateReason;
-  var trigger = message.Trigger;
-  var color = "warning";
+  let timestamp = (new Date(event.Records[0].Sns.Timestamp)).getTime() / 1000;
+  let message = JSON.parse(event.Records[0].Sns.Message);
+  let region = event.Records[0].EventSubscriptionArn.split(":")[3];
+  let subject = "AWS CloudWatch Notification";
+  let alarmName = message.AlarmName;
+  let metricName = message.Trigger.MetricName;
+  let oldState = message.OldStateValue;
+  let newState = message.NewStateValue;
+  let alarmDescription = message.AlarmDescription;
+  let alarmReason = message.NewStateReason;
+  let trigger = message.Trigger;
+  let color = "warning";
 
-  if (message.NewStateValue === "ALARM") {
-    color = "danger";
-  } else if (message.NewStateValue === "OK") {
-    color = "good";
-  }
-
+  message.NewStateValue === "ALARM" ? color = "danger" : message.NewStateValue === "OK" ? color = "good" : null;
+  
   var slackMessage = {
     text: "*" + subject + "*",
     attachments: [

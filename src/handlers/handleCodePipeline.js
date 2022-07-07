@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const { baseSlackMessage } = require("./index");
+const { baseSlackMessage } = require("../../index");
 
 function handleCodePipeline(event, context) {
   var subject = "AWS CodePipeline Notification";
