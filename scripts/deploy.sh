@@ -1,3 +1,4 @@
+#!/bin/bash
 NODE_LAMBDA=./node_modules/node-lambda/bin/node-lambda
 
 test -s $NODE_LAMBDA || { echo "node-lambda not installed. Run 'npm install' first."; exit 1; }

@@ -1,6 +1,5 @@
-*~
 .env
-tmp/deploy.env
+tmp/*
 npm-debug.log
 
 build/
